@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
+import { useAuditTrail } from "@/hooks/useAuditTrail";
 import { exportToExcel } from "@/utils/exportCalendar";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
+import AuditTrail from "./AuditTrail";
 import { cn } from "@/lib/utils";
 import { Download, Plus, Save } from "lucide-react";
 import { toast } from "sonner";
@@ -28,25 +30,47 @@ const VacationTracker = () => {
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [teamMembers, setTeamMembers] = useState<string[]>(loadTeamFromStorage);
   const { hasVacation, toggleVacation, getVacationCount } = useVacationStore();
+  const { entries, addEntry, clearAudit } = useAuditTrail();
+  const prevTeamRef = useRef<string[]>(teamMembers);
 
   useEffect(() => {
     localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamMembers));
   }, [teamMembers]);
 
   const updateMemberName = (index: number, name: string) => {
+    const oldName = teamMembers[index];
     setTeamMembers((prev) => {
       const updated = [...prev];
       updated[index] = name;
       return updated;
     });
+    if (oldName !== name) {
+      addEntry("member_renamed", `"${oldName}" renamed to "${name}"`);
+    }
   };
 
   const addMember = () => {
-    setTeamMembers((prev) => [...prev, `Team Member ${prev.length + 1}`]);
+    const newName = `Team Member ${teamMembers.length + 1}`;
+    setTeamMembers((prev) => [...prev, newName]);
+    addEntry("member_added", `Added new member "${newName}"`);
   };
 
   const removeMember = (index: number) => {
+    const removedName = teamMembers[index];
     setTeamMembers((prev) => prev.filter((_, i) => i !== index));
+    addEntry("member_removed", `Removed member "${removedName}"`);
+  };
+
+  const handleToggleVacation = (dateStr: string, memberIndex: number) => {
+    const memberName = teamMembers[memberIndex];
+    const isCurrentlyOnVacation = hasVacation(dateStr, memberIndex);
+    toggleVacation(dateStr, memberIndex);
+    
+    if (isCurrentlyOnVacation) {
+      addEntry("vacation_removed", `Removed vacation for "${memberName}" on ${dateStr}`);
+    } else {
+      addEntry("vacation_added", `Added vacation for "${memberName}" on ${dateStr}`);
+    }
   };
 
   return (
@@ -73,6 +97,7 @@ const VacationTracker = () => {
             <button
               onClick={() => {
                 localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamMembers));
+                addEntry("data_saved", "All changes saved manually");
                 toast.success("All changes saved successfully!");
               }}
               className="flex items-center gap-2 px-4 py-2 bg-holiday text-white font-bold uppercase tracking-wider text-sm hover:bg-holiday/80 transition-colors"
@@ -87,6 +112,7 @@ const VacationTracker = () => {
               <Download className="w-4 h-4" />
               Export Excel
             </button>
+            <AuditTrail entries={entries} onClear={clearAudit} />
           </div>
         </div>
       </header>
@@ -135,7 +161,7 @@ const VacationTracker = () => {
               onUpdateMember={updateMemberName}
               onRemoveMember={removeMember}
               hasVacation={hasVacation}
-              toggleVacation={toggleVacation}
+              toggleVacation={handleToggleVacation}
             />
           ) : (
             MONTHS.map((monthName, idx) => (
@@ -147,7 +173,7 @@ const VacationTracker = () => {
                 onUpdateMember={updateMemberName}
                 onRemoveMember={removeMember}
                 hasVacation={hasVacation}
-                toggleVacation={toggleVacation}
+                toggleVacation={handleToggleVacation}
               />
             ))
           )}
