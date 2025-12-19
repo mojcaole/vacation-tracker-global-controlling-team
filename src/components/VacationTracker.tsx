@@ -105,7 +105,7 @@ const VacationTracker = () => {
       <footer className="border-t-2 border-foreground mt-12 px-6 py-6 md:px-12">
         <div className="max-w-7xl mx-auto text-sm text-muted-foreground">
           <p className="uppercase tracking-wider font-medium">
-            Click on a cell to toggle vacation
+            Global Controlling 2026
           </p>
         </div>
       </footer>
