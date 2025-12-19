@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
+import { exportToCSV } from "@/utils/exportCalendar";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import { cn } from "@/lib/utils";
+import { Download } from "lucide-react";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
 
@@ -42,13 +44,22 @@ const VacationTracker = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b-4 border-foreground px-6 py-8 md:px-12 md:py-12">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase">
-            Vacation Tracker
-          </h1>
-          <p className="text-xl md:text-2xl font-medium text-muted-foreground mt-2 tracking-wide">
-            {YEAR} · Austria
-          </p>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight uppercase">
+              Vacation Tracker
+            </h1>
+            <p className="text-xl md:text-2xl font-medium text-muted-foreground mt-2 tracking-wide">
+              {YEAR} · Austria
+            </p>
+          </div>
+          <button
+            onClick={() => exportToCSV(teamMembers, hasVacation)}
+            className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            Export CSV
+          </button>
         </div>
       </header>
 
