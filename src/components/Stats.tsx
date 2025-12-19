@@ -1,15 +1,14 @@
-import { TEAM_MEMBERS } from "@/data/holidays";
-
 interface StatsProps {
+  teamMembers: string[];
   getVacationCount: (memberIndex: number) => number;
 }
 
-const Stats = ({ getVacationCount }: StatsProps) => {
+const Stats = ({ teamMembers, getVacationCount }: StatsProps) => {
   return (
     <div className="border-t-2 border-foreground pt-8 mt-12">
       <h3 className="text-lg font-bold uppercase tracking-widest mb-6">Vacation Summary</h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-        {TEAM_MEMBERS.map((member, idx) => {
+        {teamMembers.map((member, idx) => {
           const count = getVacationCount(idx);
           return (
             <div
