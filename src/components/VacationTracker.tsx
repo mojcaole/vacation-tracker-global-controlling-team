@@ -75,7 +75,7 @@ const VacationTracker = () => {
                 localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamMembers));
                 toast.success("All changes saved successfully!");
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground font-bold uppercase tracking-wider text-sm hover:bg-accent/80 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-holiday text-white font-bold uppercase tracking-wider text-sm hover:bg-holiday/80 transition-colors"
             >
               <Save className="w-4 h-4" />
               Save
