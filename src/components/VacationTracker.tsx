@@ -4,6 +4,7 @@ import { useVacationStore } from "@/hooks/useVacationStore";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
+import HolidaysList from "./HolidaysList";
 import { cn } from "@/lib/utils";
 
 const VacationTracker = () => {
@@ -95,6 +96,9 @@ const VacationTracker = () => {
 
         {/* Stats */}
         <Stats teamMembers={teamMembers} getVacationCount={getVacationCount} />
+
+        {/* Public Holidays List */}
+        <HolidaysList />
       </main>
 
       {/* Footer */}
