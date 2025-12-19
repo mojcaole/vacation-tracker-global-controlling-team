@@ -7,7 +7,8 @@ import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import { cn } from "@/lib/utils";
-import { Download, Plus } from "lucide-react";
+import { Download, Plus, Save } from "lucide-react";
+import { toast } from "sonner";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
 
@@ -68,6 +69,16 @@ const VacationTracker = () => {
             >
               <Plus className="w-4 h-4" />
               Add Member
+            </button>
+            <button
+              onClick={() => {
+                localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamMembers));
+                toast.success("All changes saved successfully!");
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground font-bold uppercase tracking-wider text-sm hover:bg-accent/80 transition-colors"
+            >
+              <Save className="w-4 h-4" />
+              Save
             </button>
             <button
               onClick={() => exportToExcel(teamMembers, hasVacation)}
