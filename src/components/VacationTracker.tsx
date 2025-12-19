@@ -7,7 +7,7 @@ import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import { cn } from "@/lib/utils";
-import { Download } from "lucide-react";
+import { Download, Plus } from "lucide-react";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
 
@@ -40,6 +40,14 @@ const VacationTracker = () => {
     });
   };
 
+  const addMember = () => {
+    setTeamMembers((prev) => [...prev, `Team Member ${prev.length + 1}`]);
+  };
+
+  const removeMember = (index: number) => {
+    setTeamMembers((prev) => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -53,13 +61,22 @@ const VacationTracker = () => {
               {YEAR} · Austria
             </p>
           </div>
-          <button
-            onClick={() => exportToCSV(teamMembers, hasVacation)}
-            className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
-          >
-            <Download className="w-4 h-4" />
-            Export CSV
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={addMember}
+              className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground font-bold uppercase tracking-wider text-sm hover:bg-secondary/80 transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add Member
+            </button>
+            <button
+              onClick={() => exportToCSV(teamMembers, hasVacation)}
+              className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
+            >
+              <Download className="w-4 h-4" />
+              Export CSV
+            </button>
+          </div>
         </div>
       </header>
 
@@ -105,6 +122,7 @@ const VacationTracker = () => {
               monthName={MONTHS[selectedMonth]}
               teamMembers={teamMembers}
               onUpdateMember={updateMemberName}
+              onRemoveMember={removeMember}
               hasVacation={hasVacation}
               toggleVacation={toggleVacation}
             />
@@ -116,6 +134,7 @@ const VacationTracker = () => {
                 monthName={monthName}
                 teamMembers={teamMembers}
                 onUpdateMember={updateMemberName}
+                onRemoveMember={removeMember}
                 hasVacation={hasVacation}
                 toggleVacation={toggleVacation}
               />

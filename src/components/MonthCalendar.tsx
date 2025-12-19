@@ -1,12 +1,14 @@
 import { HOLIDAYS_2026, YEAR } from "@/data/holidays";
 import { cn } from "@/lib/utils";
 import EditableName from "./EditableName";
+import { X } from "lucide-react";
 
 interface MonthCalendarProps {
   month: number;
   monthName: string;
   teamMembers: string[];
   onUpdateMember: (index: number, name: string) => void;
+  onRemoveMember: (index: number) => void;
   hasVacation: (dateStr: string, memberIndex: number) => boolean;
   toggleVacation: (dateStr: string, memberIndex: number) => void;
 }
@@ -16,6 +18,7 @@ const MonthCalendar = ({
   monthName,
   teamMembers,
   onUpdateMember,
+  onRemoveMember,
   hasVacation,
   toggleVacation,
 }: MonthCalendarProps) => {
@@ -72,12 +75,21 @@ const MonthCalendar = ({
           {teamMembers.map((member, idx) => (
             <div
               key={idx}
-              className="bg-header-bg/90 text-primary-foreground px-2 py-2 font-semibold text-xs uppercase tracking-wider text-center"
+              className="bg-header-bg/90 text-primary-foreground px-2 py-2 font-semibold text-xs uppercase tracking-wider text-center relative group"
             >
               <EditableName
                 value={member}
                 onChange={(name) => onUpdateMember(idx, name)}
               />
+              {teamMembers.length > 1 && (
+                <button
+                  onClick={() => onRemoveMember(idx)}
+                  className="absolute -top-1 -right-1 w-5 h-5 bg-destructive text-destructive-foreground rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+                  title="Remove member"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              )}
             </div>
           ))}
 
