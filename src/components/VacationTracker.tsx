@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
 import Legend from "./Legend";
@@ -7,10 +7,28 @@ import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import { cn } from "@/lib/utils";
 
+const TEAM_STORAGE_KEY = "vacation-tracker-team";
+
+function loadTeamFromStorage(): string[] {
+  try {
+    const stored = localStorage.getItem(TEAM_STORAGE_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.error("Failed to load team from storage", e);
+  }
+  return [...DEFAULT_TEAM];
+}
+
 const VacationTracker = () => {
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
-  const [teamMembers, setTeamMembers] = useState<string[]>([...DEFAULT_TEAM]);
+  const [teamMembers, setTeamMembers] = useState<string[]>(loadTeamFromStorage);
   const { hasVacation, toggleVacation, getVacationCount } = useVacationStore();
+
+  useEffect(() => {
+    localStorage.setItem(TEAM_STORAGE_KEY, JSON.stringify(teamMembers));
+  }, [teamMembers]);
 
   const updateMemberName = (index: number, name: string) => {
     setTeamMembers((prev) => {
