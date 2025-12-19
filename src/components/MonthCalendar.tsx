@@ -1,9 +1,12 @@
-import { HOLIDAYS_2026, TEAM_MEMBERS, YEAR } from "@/data/holidays";
+import { HOLIDAYS_2026, YEAR } from "@/data/holidays";
 import { cn } from "@/lib/utils";
+import EditableName from "./EditableName";
 
 interface MonthCalendarProps {
-  month: number; // 0-indexed
+  month: number;
   monthName: string;
+  teamMembers: string[];
+  onUpdateMember: (index: number, name: string) => void;
   hasVacation: (dateStr: string, memberIndex: number) => boolean;
   toggleVacation: (dateStr: string, memberIndex: number) => void;
 }
@@ -11,6 +14,8 @@ interface MonthCalendarProps {
 const MonthCalendar = ({
   month,
   monthName,
+  teamMembers,
+  onUpdateMember,
   hasVacation,
   toggleVacation,
 }: MonthCalendarProps) => {
@@ -57,19 +62,22 @@ const MonthCalendar = ({
         <div
           className="grid min-w-[700px]"
           style={{
-            gridTemplateColumns: `minmax(180px, 1fr) repeat(${TEAM_MEMBERS.length}, minmax(100px, 1fr))`,
+            gridTemplateColumns: `minmax(180px, 1fr) repeat(${teamMembers.length}, minmax(100px, 1fr))`,
           }}
         >
           {/* Header Row */}
           <div className="bg-header-bg text-primary-foreground px-4 py-3 font-bold uppercase tracking-wider text-sm">
             Date
           </div>
-          {TEAM_MEMBERS.map((member, idx) => (
+          {teamMembers.map((member, idx) => (
             <div
               key={idx}
-              className="bg-header-bg/90 text-primary-foreground px-2 py-3 font-semibold text-xs uppercase tracking-wider text-center truncate"
+              className="bg-header-bg/90 text-primary-foreground px-2 py-2 font-semibold text-xs uppercase tracking-wider text-center"
             >
-              {member}
+              <EditableName
+                value={member}
+                onChange={(name) => onUpdateMember(idx, name)}
+              />
             </div>
           ))}
 
@@ -96,7 +104,7 @@ const MonthCalendar = ({
                 </div>
 
                 {/* Team Member Cells */}
-                {TEAM_MEMBERS.map((_, memberIdx) => {
+                {teamMembers.map((_, memberIdx) => {
                   const isVacation = hasVacation(dateStr, memberIdx);
                   const isClickable = !isHoliday && !isWeekend;
 

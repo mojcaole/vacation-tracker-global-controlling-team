@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MONTHS, YEAR } from "@/data/holidays";
+import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
@@ -8,7 +8,16 @@ import { cn } from "@/lib/utils";
 
 const VacationTracker = () => {
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [teamMembers, setTeamMembers] = useState<string[]>([...DEFAULT_TEAM]);
   const { hasVacation, toggleVacation, getVacationCount } = useVacationStore();
+
+  const updateMemberName = (index: number, name: string) => {
+    setTeamMembers((prev) => {
+      const updated = [...prev];
+      updated[index] = name;
+      return updated;
+    });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -64,6 +73,8 @@ const VacationTracker = () => {
               key={selectedMonth}
               month={selectedMonth}
               monthName={MONTHS[selectedMonth]}
+              teamMembers={teamMembers}
+              onUpdateMember={updateMemberName}
               hasVacation={hasVacation}
               toggleVacation={toggleVacation}
             />
@@ -73,6 +84,8 @@ const VacationTracker = () => {
                 key={idx}
                 month={idx}
                 monthName={monthName}
+                teamMembers={teamMembers}
+                onUpdateMember={updateMemberName}
                 hasVacation={hasVacation}
                 toggleVacation={toggleVacation}
               />
@@ -81,7 +94,7 @@ const VacationTracker = () => {
         </div>
 
         {/* Stats */}
-        <Stats getVacationCount={getVacationCount} />
+        <Stats teamMembers={teamMembers} getVacationCount={getVacationCount} />
       </main>
 
       {/* Footer */}
