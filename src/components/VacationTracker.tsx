@@ -103,12 +103,9 @@ const VacationTracker = () => {
 
       {/* Footer */}
       <footer className="border-t-2 border-foreground mt-12 px-6 py-6 md:px-12">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+        <div className="max-w-7xl mx-auto text-sm text-muted-foreground">
           <p className="uppercase tracking-wider font-medium">
             Click on a cell to toggle vacation
-          </p>
-          <p className="uppercase tracking-wider">
-            Austrian Public Holidays · {YEAR}
           </p>
         </div>
       </footer>
