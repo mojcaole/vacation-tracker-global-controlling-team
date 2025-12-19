@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
-import { exportToCSV } from "@/utils/exportCalendar";
+import { exportToExcel } from "@/utils/exportCalendar";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
@@ -70,11 +70,11 @@ const VacationTracker = () => {
               Add Member
             </button>
             <button
-              onClick={() => exportToCSV(teamMembers, hasVacation)}
+              onClick={() => exportToExcel(teamMembers, hasVacation)}
               className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
             >
               <Download className="w-4 h-4" />
-              Export CSV
+              Export Excel
             </button>
           </div>
         </div>

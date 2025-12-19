@@ -1,5 +1,6 @@
-import { HOLIDAYS_2026, YEAR, MONTHS } from "@/data/holidays";
+import { HOLIDAYS_2026, YEAR } from "@/data/holidays";
 import { format } from "date-fns";
+import * as XLSX from "xlsx";
 
 type VacationChecker = (dateStr: string, memberIndex: number) => boolean;
 
@@ -14,7 +15,7 @@ function getDaysInYear(year: number): Date[] {
   return days;
 }
 
-export function exportToCSV(
+export function exportToExcel(
   teamMembers: string[],
   hasVacation: VacationChecker
 ): void {
@@ -22,7 +23,7 @@ export function exportToCSV(
   
   // Header row
   const headers = ["Date", "Day", "Holiday", ...teamMembers];
-  const rows: string[][] = [headers];
+  const rows: (string | number)[][] = [headers];
   
   days.forEach((date) => {
     const dateStr = format(date, "yyyy-MM-dd");
@@ -43,18 +44,17 @@ export function exportToCSV(
     ]);
   });
   
-  // Convert to CSV string
-  const csvContent = rows
-    .map((row) =>
-      row.map((cell) => `"${cell.replace(/"/g, '""')}"`).join(",")
-    )
-    .join("\n");
+  // Create workbook and worksheet
+  const worksheet = XLSX.utils.aoa_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Vacations");
+  
+  // Auto-size columns
+  const colWidths = headers.map((h, i) => ({
+    wch: Math.max(h.length, i === 0 ? 12 : i === 2 ? 20 : 15)
+  }));
+  worksheet["!cols"] = colWidths;
   
   // Download
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = `vacation_tracker_${YEAR}.csv`;
-  link.click();
-  URL.revokeObjectURL(link.href);
+  XLSX.writeFile(workbook, `vacation_tracker_${YEAR}.xlsx`);
 }
