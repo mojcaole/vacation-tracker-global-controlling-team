@@ -1,4 +1,4 @@
-import { HOLIDAYS_2026, YEAR } from "@/data/holidays";
+import { HOLIDAYS_2026, SCHOOL_HOLIDAYS_2026, YEAR } from "@/data/holidays";
 import { cn } from "@/lib/utils";
 import EditableName from "./EditableName";
 import { X } from "lucide-react";
@@ -38,6 +38,7 @@ const MonthCalendar = ({
     const dayOfWeek = date.getDay();
     const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
     const holidayName = HOLIDAYS_2026[dateStr];
+    const schoolHolidayName = SCHOOL_HOLIDAYS_2026[dateStr];
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
     return {
@@ -46,6 +47,8 @@ const MonthCalendar = ({
       isWeekend,
       isHoliday: !!holidayName,
       holidayName,
+      isSchoolHoliday: !!schoolHolidayName,
+      schoolHolidayName,
       dayName: dayNames[dayOfWeek],
     };
   };
@@ -65,12 +68,15 @@ const MonthCalendar = ({
         <div
           className="grid min-w-[700px]"
           style={{
-            gridTemplateColumns: `minmax(180px, 1fr) repeat(${teamMembers.length}, minmax(100px, 1fr))`,
+            gridTemplateColumns: `minmax(180px, 1fr) 80px repeat(${teamMembers.length}, minmax(100px, 1fr))`,
           }}
         >
           {/* Header Row */}
           <div className="bg-header-bg text-primary-foreground px-4 py-3 font-bold uppercase tracking-wider text-sm">
             Date
+          </div>
+          <div className="bg-school-holiday text-school-holiday-foreground px-2 py-3 font-bold uppercase tracking-wider text-xs text-center">
+            School
           </div>
           {teamMembers.map((member, idx) => (
             <div
@@ -95,7 +101,7 @@ const MonthCalendar = ({
 
           {/* Day Rows */}
           {days.map((day) => {
-            const { dateStr, isWeekend, isHoliday, holidayName, dayName } = getDayInfo(day);
+            const { dateStr, isWeekend, isHoliday, holidayName, isSchoolHoliday, schoolHolidayName, dayName } = getDayInfo(day);
 
             return (
               <>
@@ -112,6 +118,22 @@ const MonthCalendar = ({
                   <span className="uppercase text-xs tracking-wide">{dayName}</span>
                   {holidayName && (
                     <span className="ml-2 text-xs opacity-90 truncate">({holidayName})</span>
+                  )}
+                </div>
+
+                {/* School Holiday Cell */}
+                <div
+                  key={`school-${dateStr}`}
+                  className={cn(
+                    "border-b border-border flex items-center justify-center",
+                    isSchoolHoliday && "bg-school-holiday",
+                    isWeekend && !isSchoolHoliday && "bg-weekend",
+                    isHoliday && !isSchoolHoliday && "bg-primary/10"
+                  )}
+                  title={schoolHolidayName}
+                >
+                  {isSchoolHoliday && (
+                    <div className="w-2.5 h-2.5 bg-school-holiday-foreground rounded-full" />
                   )}
                 </div>
 
