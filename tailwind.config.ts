@@ -54,6 +54,10 @@ export default {
         vacation: "hsl(var(--vacation))",
         weekend: "hsl(var(--weekend))",
         "header-bg": "hsl(var(--header-bg))",
+        "school-holiday": {
+          DEFAULT: "hsl(var(--school-holiday))",
+          foreground: "hsl(var(--school-holiday-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

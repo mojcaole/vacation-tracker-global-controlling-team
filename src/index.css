@@ -44,6 +44,8 @@
     --vacation: 214 100% 33%;
     --weekend: 0 0% 95%;
     --header-bg: 0 0% 10%;
+    --school-holiday: 142 70% 45%;
+    --school-holiday-foreground: 0 0% 100%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 26%;
@@ -88,6 +90,8 @@
     --vacation: 214 100% 45%;
     --weekend: 0 0% 12%;
     --header-bg: 0 0% 5%;
+    --school-holiday: 142 70% 35%;
+    --school-holiday-foreground: 0 0% 100%;
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 96%;
