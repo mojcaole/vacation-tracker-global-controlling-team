@@ -159,7 +159,9 @@ const MonthCalendar = ({
                     "border-b border-border flex items-center justify-center",
                     isSchoolHoliday && "bg-school-holiday",
                     isWeekend && !isSchoolHoliday && "bg-weekend",
-                    isHoliday && !isSchoolHoliday && "bg-primary/10"
+                    isHoliday && !isSchoolHoliday && "bg-primary/10",
+                    isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-accent/40"
+                  )}
                   )}
                   title={schoolHolidayName}
                 >
