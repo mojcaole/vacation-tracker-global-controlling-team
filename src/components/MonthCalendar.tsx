@@ -119,7 +119,6 @@ const MonthCalendar = ({
             const prevWeekNumber = dayIndex > 0 ? getDayInfo(days[dayIndex - 1]).weekNumber : null;
             const showWeekNumber = weekNumber !== prevWeekNumber;
             const isCurrentWeek = weekNumber === currentWeekNumber;
-            const showWeekNumber = weekNumber !== prevWeekNumber;
 
             return (
               <>
