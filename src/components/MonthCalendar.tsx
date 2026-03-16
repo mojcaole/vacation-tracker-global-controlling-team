@@ -32,6 +32,14 @@ const MonthCalendar = ({
     return `${YEAR}-${m}-${d}`;
   };
 
+  const getWeekNumber = (date: Date): number => {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+  };
+
   const getDayInfo = (day: number) => {
     const date = new Date(YEAR, month, day);
     const dateStr = formatDateStr(day);
@@ -50,6 +58,7 @@ const MonthCalendar = ({
       isSchoolHoliday: !!schoolHolidayName,
       schoolHolidayName,
       dayName: dayNames[dayOfWeek],
+      weekNumber: getWeekNumber(date),
     };
   };
 
@@ -68,10 +77,13 @@ const MonthCalendar = ({
         <div
           className="grid min-w-[700px]"
           style={{
-            gridTemplateColumns: `minmax(180px, 1fr) 80px repeat(${teamMembers.length}, minmax(100px, 1fr))`,
+            gridTemplateColumns: `50px minmax(180px, 1fr) 80px repeat(${teamMembers.length}, minmax(100px, 1fr))`,
           }}
         >
           {/* Header Row */}
+          <div className="bg-header-bg text-primary-foreground px-2 py-3 font-bold uppercase tracking-wider text-xs text-center">
+            WK
+          </div>
           <div className="bg-header-bg text-primary-foreground px-4 py-3 font-bold uppercase tracking-wider text-sm">
             Date
           </div>
@@ -100,11 +112,25 @@ const MonthCalendar = ({
           ))}
 
           {/* Day Rows */}
-          {days.map((day) => {
-            const { dateStr, isWeekend, isHoliday, holidayName, isSchoolHoliday, schoolHolidayName, dayName } = getDayInfo(day);
+          {days.map((day, dayIndex) => {
+            const { dateStr, isWeekend, isHoliday, holidayName, isSchoolHoliday, schoolHolidayName, dayName, weekNumber } = getDayInfo(day);
+            const prevWeekNumber = dayIndex > 0 ? getDayInfo(days[dayIndex - 1]).weekNumber : null;
+            const showWeekNumber = weekNumber !== prevWeekNumber;
 
             return (
               <>
+                {/* Week Number Cell */}
+                <div
+                  key={`wk-${dateStr}`}
+                  className={cn(
+                    "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
+                    isWeekend && "bg-weekend",
+                    isHoliday && "bg-primary/10"
+                  )}
+                >
+                  {showWeekNumber && weekNumber}
+                </div>
+
                 {/* Date Cell */}
                 <div
                   key={`date-${dateStr}`}
