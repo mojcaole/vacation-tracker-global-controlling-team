@@ -125,10 +125,11 @@ const MonthCalendar = ({
                 {/* Week Number Cell */}
                 <div
                   key={`wk-${dateStr}`}
-                  className={cn(
+                   className={cn(
                     "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
                     isWeekend && "bg-weekend",
-                    isHoliday && "bg-primary/10"
+                    isHoliday && "bg-primary/10",
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-accent/40"
                   )}
                 >
                   {showWeekNumber && weekNumber}
