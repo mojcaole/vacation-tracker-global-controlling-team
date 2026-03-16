@@ -65,6 +65,8 @@ const MonthCalendar = ({
   const daysInMonth = getDaysInMonth(YEAR, month);
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
+  const currentWeekNumber = getWeekNumber(new Date());
+
   return (
     <div className="animate-fade-in">
       {/* Month Header */}
