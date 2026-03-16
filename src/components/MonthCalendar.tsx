@@ -65,6 +65,8 @@ const MonthCalendar = ({
   const daysInMonth = getDaysInMonth(YEAR, month);
   const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
 
+  const currentWeekNumber = getWeekNumber(new Date());
+
   return (
     <div className="animate-fade-in">
       {/* Month Header */}
@@ -116,16 +118,18 @@ const MonthCalendar = ({
             const { dateStr, isWeekend, isHoliday, holidayName, isSchoolHoliday, schoolHolidayName, dayName, weekNumber } = getDayInfo(day);
             const prevWeekNumber = dayIndex > 0 ? getDayInfo(days[dayIndex - 1]).weekNumber : null;
             const showWeekNumber = weekNumber !== prevWeekNumber;
+            const isCurrentWeek = weekNumber === currentWeekNumber;
 
             return (
               <>
                 {/* Week Number Cell */}
                 <div
                   key={`wk-${dateStr}`}
-                  className={cn(
+                   className={cn(
                     "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
                     isWeekend && "bg-weekend",
-                    isHoliday && "bg-primary/10"
+                    isHoliday && "bg-primary/10",
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-accent/40"
                   )}
                 >
                   {showWeekNumber && weekNumber}
@@ -137,7 +141,8 @@ const MonthCalendar = ({
                   className={cn(
                     "px-4 py-2 font-medium text-sm flex items-center gap-2 border-b border-border",
                     isHoliday && "bg-primary text-primary-foreground font-bold",
-                    isWeekend && !isHoliday && "bg-weekend text-muted-foreground"
+                    isWeekend && !isHoliday && "bg-weekend text-muted-foreground",
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-accent/40"
                   )}
                 >
                   <span className="font-bold w-8">{String(day).padStart(2, "0")}</span>
@@ -154,7 +159,8 @@ const MonthCalendar = ({
                     "border-b border-border flex items-center justify-center",
                     isSchoolHoliday && "bg-school-holiday",
                     isWeekend && !isSchoolHoliday && "bg-weekend",
-                    isHoliday && !isSchoolHoliday && "bg-primary/10"
+                    isHoliday && !isSchoolHoliday && "bg-primary/10",
+                    isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-accent/40"
                   )}
                   title={schoolHolidayName}
                 >
@@ -177,6 +183,7 @@ const MonthCalendar = ({
                         isHoliday && "bg-primary/10",
                         isWeekend && !isHoliday && "bg-weekend",
                         isVacation && "bg-secondary",
+                        isCurrentWeek && !isWeekend && !isHoliday && !isVacation && "bg-accent/40",
                         isClickable && "cursor-pointer hover:bg-secondary/20 active:animate-cell-pop",
                         !isClickable && "cursor-not-allowed"
                       )}
