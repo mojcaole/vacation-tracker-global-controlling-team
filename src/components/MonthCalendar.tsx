@@ -161,7 +161,7 @@ const MonthCalendar = ({
                     isWeekend && !isSchoolHoliday && "bg-weekend",
                     isHoliday && !isSchoolHoliday && "bg-primary/10",
                     isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-accent/40"
-                  )
+                  )}
                   title={schoolHolidayName}
                 >
                   {isSchoolHoliday && (
