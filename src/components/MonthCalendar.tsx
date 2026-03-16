@@ -77,10 +77,13 @@ const MonthCalendar = ({
         <div
           className="grid min-w-[700px]"
           style={{
-            gridTemplateColumns: `minmax(180px, 1fr) 80px repeat(${teamMembers.length}, minmax(100px, 1fr))`,
+            gridTemplateColumns: `50px minmax(180px, 1fr) 80px repeat(${teamMembers.length}, minmax(100px, 1fr))`,
           }}
         >
           {/* Header Row */}
+          <div className="bg-header-bg text-primary-foreground px-2 py-3 font-bold uppercase tracking-wider text-xs text-center">
+            WK
+          </div>
           <div className="bg-header-bg text-primary-foreground px-4 py-3 font-bold uppercase tracking-wider text-sm">
             Date
           </div>
