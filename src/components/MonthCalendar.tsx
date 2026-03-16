@@ -184,6 +184,7 @@ const MonthCalendar = ({
                         isHoliday && "bg-primary/10",
                         isWeekend && !isHoliday && "bg-weekend",
                         isVacation && "bg-secondary",
+                        isCurrentWeek && !isWeekend && !isHoliday && !isVacation && "bg-accent/40",
                         isClickable && "cursor-pointer hover:bg-secondary/20 active:animate-cell-pop",
                         !isClickable && "cursor-not-allowed"
                       )}
