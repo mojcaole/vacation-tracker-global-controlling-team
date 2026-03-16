@@ -112,11 +112,25 @@ const MonthCalendar = ({
           ))}
 
           {/* Day Rows */}
-          {days.map((day) => {
-            const { dateStr, isWeekend, isHoliday, holidayName, isSchoolHoliday, schoolHolidayName, dayName } = getDayInfo(day);
+          {days.map((day, dayIndex) => {
+            const { dateStr, isWeekend, isHoliday, holidayName, isSchoolHoliday, schoolHolidayName, dayName, weekNumber } = getDayInfo(day);
+            const prevWeekNumber = dayIndex > 0 ? getDayInfo(days[dayIndex - 1]).weekNumber : null;
+            const showWeekNumber = weekNumber !== prevWeekNumber;
 
             return (
               <>
+                {/* Week Number Cell */}
+                <div
+                  key={`wk-${dateStr}`}
+                  className={cn(
+                    "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
+                    isWeekend && "bg-weekend",
+                    isHoliday && "bg-primary/10"
+                  )}
+                >
+                  {showWeekNumber && weekNumber}
+                </div>
+
                 {/* Date Cell */}
                 <div
                   key={`date-${dateStr}`}
