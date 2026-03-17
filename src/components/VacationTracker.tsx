@@ -9,7 +9,7 @@ import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import AuditTrail from "./AuditTrail";
 import { cn } from "@/lib/utils";
-import { Download, Plus, Save } from "lucide-react";
+import { Download, Plus, Save, Navigation } from "lucide-react";
 import { toast } from "sonner";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
