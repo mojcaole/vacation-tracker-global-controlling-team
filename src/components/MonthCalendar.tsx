@@ -125,6 +125,7 @@ const MonthCalendar = ({
                 {/* Week Number Cell */}
                 <div
                   key={`wk-${dateStr}`}
+                  {...(isCurrentWeek && showWeekNumber ? { 'data-current-week': 'true' } : {})}
                    className={cn(
                     "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
                     isWeekend && "bg-weekend",

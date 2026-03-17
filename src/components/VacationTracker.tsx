@@ -9,7 +9,7 @@ import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import AuditTrail from "./AuditTrail";
 import { cn } from "@/lib/utils";
-import { Download, Plus, Save } from "lucide-react";
+import { Download, Plus, Save, Navigation } from "lucide-react";
 import { toast } from "sonner";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
@@ -148,6 +148,22 @@ const VacationTracker = () => {
               {month.slice(0, 3)}
             </button>
           ))}
+          <button
+            onClick={() => {
+              const currentMonth = new Date().getMonth();
+              setSelectedMonth(null);
+              setTimeout(() => {
+                const el = document.querySelector('[data-current-week="true"]');
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+              }, 100);
+            }}
+            className="ml-auto px-4 py-2 text-sm font-bold uppercase tracking-wider transition-colors bg-accent text-accent-foreground hover:bg-accent/80 flex items-center gap-2"
+          >
+            <Navigation className="w-4 h-4" />
+            Today
+          </button>
         </div>
 
         {/* Calendar Grid */}
