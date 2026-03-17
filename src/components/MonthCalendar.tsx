@@ -200,6 +200,28 @@ const MonthCalendar = ({
               </>
             );
           })}
+
+          {/* Summary Row */}
+          <div className="bg-muted border-t-2 border-foreground px-2 py-3 font-bold uppercase tracking-wider text-xs text-center">
+          </div>
+          <div className="bg-muted border-t-2 border-foreground px-4 py-3 font-bold uppercase tracking-wider text-xs flex items-center">
+            Total
+          </div>
+          <div className="bg-muted border-t-2 border-foreground" />
+          {teamMembers.map((_, memberIdx) => {
+            const count = days.reduce((sum, day) => {
+              const dateStr = formatDateStr(day);
+              return sum + (hasVacation(dateStr, memberIdx) ? 1 : 0);
+            }, 0);
+            return (
+              <div
+                key={`summary-${memberIdx}`}
+                className="bg-muted border-t-2 border-foreground px-2 py-3 font-bold text-sm text-center tabular-nums"
+              >
+                {count > 0 ? count : "–"}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
