@@ -130,7 +130,7 @@ const MonthCalendar = ({
                     "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
                     isWeekend && "bg-weekend",
                     isHoliday && "bg-primary/10",
-                    isCurrentWeek && !isWeekend && !isHoliday && "bg-accent/40"
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week"
                   )}
                 >
                   {showWeekNumber && weekNumber}
@@ -143,7 +143,7 @@ const MonthCalendar = ({
                     "px-4 py-2 font-medium text-sm flex items-center gap-2 border-b border-border",
                     isHoliday && "bg-primary text-primary-foreground font-bold",
                     isWeekend && !isHoliday && "bg-weekend text-muted-foreground",
-                    isCurrentWeek && !isWeekend && !isHoliday && "bg-accent/40"
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week"
                   )}
                 >
                   <span className="font-bold w-8">{String(day).padStart(2, "0")}</span>
@@ -161,7 +161,7 @@ const MonthCalendar = ({
                     isSchoolHoliday && "bg-school-holiday",
                     isWeekend && !isSchoolHoliday && "bg-weekend",
                     isHoliday && !isSchoolHoliday && "bg-primary/10",
-                    isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-accent/40"
+                    isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-current-week"
                   )}
                   title={schoolHolidayName}
                 >
@@ -184,7 +184,7 @@ const MonthCalendar = ({
                         isHoliday && "bg-primary/10",
                         isWeekend && !isHoliday && "bg-weekend",
                         isVacation && "bg-secondary",
-                        isCurrentWeek && !isWeekend && !isHoliday && !isVacation && "bg-accent/40",
+                        isCurrentWeek && !isWeekend && !isHoliday && !isVacation && "bg-current-week",
                         isClickable && "cursor-pointer hover:bg-secondary/20 active:animate-cell-pop",
                         !isClickable && "cursor-not-allowed"
                       )}
