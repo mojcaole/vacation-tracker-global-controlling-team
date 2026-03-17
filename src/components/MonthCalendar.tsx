@@ -143,7 +143,7 @@ const MonthCalendar = ({
                     "px-4 py-2 font-medium text-sm flex items-center gap-2 border-b border-border",
                     isHoliday && "bg-primary text-primary-foreground font-bold",
                     isWeekend && !isHoliday && "bg-weekend text-muted-foreground",
-                    isCurrentWeek && !isWeekend && !isHoliday && "bg-accent/40"
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week"
                   )}
                 >
                   <span className="font-bold w-8">{String(day).padStart(2, "0")}</span>
