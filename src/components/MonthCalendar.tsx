@@ -90,7 +90,7 @@ const MonthCalendar = ({
             Date
           </div>
           <div className="bg-school-holiday text-school-holiday-foreground px-2 py-3 font-bold uppercase tracking-wider text-xs text-center">
-            School
+            School Holidays
           </div>
           {teamMembers.map((member, idx) => (
             <div
