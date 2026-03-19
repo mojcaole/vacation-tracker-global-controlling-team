@@ -148,22 +148,31 @@ const VacationTracker = () => {
               {month.slice(0, 3)}
             </button>
           ))}
-          <button
-            onClick={() => {
-              const currentMonth = new Date().getMonth();
-              setSelectedMonth(null);
-              setTimeout(() => {
-                const el = document.querySelector('[data-current-week="true"]');
-                if (el) {
-                  el.scrollIntoView({ behavior: "smooth", block: "center" });
-                }
-              }, 100);
-            }}
-            className="ml-auto px-4 py-2 text-sm font-bold uppercase tracking-wider transition-colors bg-accent text-accent-foreground hover:bg-accent/80 flex items-center gap-2"
-          >
-            <Navigation className="w-4 h-4" />
-            Today
-          </button>
+          {(() => {
+            const now = new Date();
+            const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+            const dayNum = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+            const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            const currentWeek = Math.ceil((((d.getTime() - yearStart.getTime()) / 86400000) + 1) / 7);
+            return (
+              <button
+                onClick={() => {
+                  setSelectedMonth(null);
+                  setTimeout(() => {
+                    const el = document.querySelector('[data-current-week="true"]');
+                    if (el) {
+                      el.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }
+                  }, 100);
+                }}
+                className="ml-auto px-4 py-2 text-sm font-bold uppercase tracking-wider transition-colors bg-accent text-accent-foreground hover:bg-accent/80 flex items-center gap-2"
+              >
+                <Navigation className="w-4 h-4" />
+                This Week · KW {currentWeek}
+              </button>
+            );
+          })()}
         </div>
 
         {/* Calendar Grid */}
