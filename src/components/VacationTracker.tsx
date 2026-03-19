@@ -11,7 +11,7 @@ import HolidaysList from "./HolidaysList";
 import AuditTrail from "./AuditTrail";
 import ThemeToggle from "./ThemeToggle";
 import { cn } from "@/lib/utils";
-import { Download, Plus, Save, Navigation } from "lucide-react";
+import { Download, FileText, Plus, Save, Navigation } from "lucide-react";
 import { toast } from "sonner";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
