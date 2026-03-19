@@ -114,6 +114,7 @@ const VacationTracker = () => {
               Export Excel
             </button>
             <AuditTrail entries={entries} onClear={clearAudit} />
+            <ThemeToggle />
           </div>
         </div>
       </header>
