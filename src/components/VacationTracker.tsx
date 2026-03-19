@@ -112,7 +112,14 @@ const VacationTracker = () => {
               className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
             >
               <Download className="w-4 h-4" />
-              Export Excel
+              Excel
+            </button>
+            <button
+              onClick={() => exportToPdf(teamMembers, hasVacation)}
+              className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              PDF
             </button>
             <AuditTrail entries={entries} onClear={clearAudit} />
             <ThemeToggle />
