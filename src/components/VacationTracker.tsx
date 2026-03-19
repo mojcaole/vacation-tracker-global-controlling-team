@@ -3,6 +3,7 @@ import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
 import { useAuditTrail } from "@/hooks/useAuditTrail";
 import { exportToExcel } from "@/utils/exportCalendar";
+import { exportToPdf } from "@/utils/exportPdf";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
