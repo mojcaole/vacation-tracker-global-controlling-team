@@ -58,7 +58,10 @@ export default {
           DEFAULT: "hsl(var(--school-holiday))",
           foreground: "hsl(var(--school-holiday-foreground))",
         },
-        "current-week": "hsl(var(--current-week))",
+        "current-week": {
+          DEFAULT: "hsl(var(--current-week))",
+          foreground: "hsl(var(--current-week-foreground))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",

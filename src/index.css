@@ -47,6 +47,7 @@
     --school-holiday: 142 70% 45%;
     --school-holiday-foreground: 0 0% 100%;
     --current-week: 50 100% 80%;
+    --current-week-foreground: 0 0% 8%;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 0 0% 26%;
@@ -93,6 +94,8 @@
     --header-bg: 0 0% 5%;
     --school-holiday: 142 70% 35%;
     --school-holiday-foreground: 0 0% 100%;
+    --current-week: 50 80% 25%;
+    --current-week-foreground: 50 50% 90%;
 
     --sidebar-background: 0 0% 10%;
     --sidebar-foreground: 0 0% 96%;

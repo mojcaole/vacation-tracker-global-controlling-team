@@ -130,7 +130,7 @@ const MonthCalendar = ({
                     "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
                     isWeekend && "bg-weekend",
                     isHoliday && "bg-primary/10",
-                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week"
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week text-current-week-foreground"
                   )}
                 >
                   {showWeekNumber && weekNumber}
@@ -143,7 +143,7 @@ const MonthCalendar = ({
                     "px-4 py-2 font-medium text-sm flex items-center gap-2 border-b border-border",
                     isHoliday && "bg-primary text-primary-foreground font-bold",
                     isWeekend && !isHoliday && "bg-weekend text-muted-foreground",
-                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week"
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week text-current-week-foreground"
                   )}
                 >
                   <span className="font-bold w-8">{String(day).padStart(2, "0")}</span>
@@ -161,7 +161,7 @@ const MonthCalendar = ({
                     isSchoolHoliday && "bg-school-holiday",
                     isWeekend && !isSchoolHoliday && "bg-weekend",
                     isHoliday && !isSchoolHoliday && "bg-primary/10",
-                    isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-current-week"
+                    isCurrentWeek && !isWeekend && !isHoliday && !isSchoolHoliday && "bg-current-week text-current-week-foreground"
                   )}
                   title={schoolHolidayName}
                 >

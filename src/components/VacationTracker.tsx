@@ -8,6 +8,7 @@ import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
 import HolidaysList from "./HolidaysList";
 import AuditTrail from "./AuditTrail";
+import ThemeToggle from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import { Download, Plus, Save, Navigation } from "lucide-react";
 import { toast } from "sonner";
@@ -113,6 +114,7 @@ const VacationTracker = () => {
               Export Excel
             </button>
             <AuditTrail entries={entries} onClear={clearAudit} />
+            <ThemeToggle />
           </div>
         </div>
       </header>
