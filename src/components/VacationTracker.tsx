@@ -3,6 +3,7 @@ import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
 import { useAuditTrail } from "@/hooks/useAuditTrail";
 import { exportToExcel } from "@/utils/exportCalendar";
+import { exportToPdf } from "@/utils/exportPdf";
 import Legend from "./Legend";
 import MonthCalendar from "./MonthCalendar";
 import Stats from "./Stats";
@@ -10,7 +11,7 @@ import HolidaysList from "./HolidaysList";
 import AuditTrail from "./AuditTrail";
 import ThemeToggle from "./ThemeToggle";
 import { cn } from "@/lib/utils";
-import { Download, Plus, Save, Navigation } from "lucide-react";
+import { Download, FileText, Plus, Save, Navigation } from "lucide-react";
 import { toast } from "sonner";
 
 const TEAM_STORAGE_KEY = "vacation-tracker-team";
@@ -111,7 +112,14 @@ const VacationTracker = () => {
               className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
             >
               <Download className="w-4 h-4" />
-              Export Excel
+              Excel
+            </button>
+            <button
+              onClick={() => exportToPdf(teamMembers, hasVacation)}
+              className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              PDF
             </button>
             <AuditTrail entries={entries} onClear={clearAudit} />
             <ThemeToggle />
