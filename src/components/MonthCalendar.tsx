@@ -130,7 +130,7 @@ const MonthCalendar = ({
                     "border-b border-border flex items-center justify-center text-xs font-bold text-muted-foreground",
                     isWeekend && "bg-weekend",
                     isHoliday && "bg-primary/10",
-                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week"
+                    isCurrentWeek && !isWeekend && !isHoliday && "bg-current-week text-current-week-foreground"
                   )}
                 >
                   {showWeekNumber && weekNumber}
