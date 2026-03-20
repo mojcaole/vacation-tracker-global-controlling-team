@@ -117,7 +117,7 @@ const VacationTracker = () => {
               Excel
             </button>
             <button
-              onClick={() => exportToPdf(teamMembers, hasVacation)}
+              onClick={() => exportToPdf(teamMembers, hasVacation, (idx) => getMemberColor(idx).rgb)}
               className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
             >
               <FileText className="w-4 h-4" />
