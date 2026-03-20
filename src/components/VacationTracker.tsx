@@ -199,6 +199,9 @@ const VacationTracker = () => {
               onRemoveMember={removeMember}
               hasVacation={hasVacation}
               toggleVacation={handleToggleVacation}
+              getMemberColor={getMemberColor}
+              getMemberColorIndex={getMemberColorIndex}
+              onSetMemberColor={setMemberColor}
             />
           ) : (
             MONTHS.map((monthName, idx) => (
@@ -211,6 +214,9 @@ const VacationTracker = () => {
                 onRemoveMember={removeMember}
                 hasVacation={hasVacation}
                 toggleVacation={handleToggleVacation}
+                getMemberColor={getMemberColor}
+                getMemberColorIndex={getMemberColorIndex}
+                onSetMemberColor={setMemberColor}
               />
             ))
           )}
