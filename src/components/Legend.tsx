@@ -14,8 +14,8 @@ const Legend = () => {
         <span className="text-sm font-medium uppercase tracking-wide text-muted-foreground">Weekend</span>
       </div>
       <div className="flex items-center gap-2">
-        <div className="w-5 h-5 bg-secondary" />
-        <span className="text-sm font-medium uppercase tracking-wide">Vacation</span>
+        <div className="w-5 h-5 bg-gradient-to-r from-[hsl(214,100%,33%)] via-[hsl(160,84%,39%)] to-[hsl(350,80%,55%)]" />
+        <span className="text-sm font-medium uppercase tracking-wide">Vacation (per member)</span>
       </div>
     </div>
   );
