@@ -188,6 +188,7 @@ const MonthCalendar = ({
                 {teamMembers.map((_, memberIdx) => {
                   const isVacation = hasVacation(dateStr, memberIdx);
                   const isClickable = !isHoliday && !isWeekend;
+                  const memberColor = getMemberColor(memberIdx);
 
                   return (
                     <div
@@ -197,15 +198,15 @@ const MonthCalendar = ({
                         "relative border-b border-border transition-all duration-150",
                         isHoliday && "bg-primary/10",
                         isWeekend && !isHoliday && "bg-weekend",
-                        isVacation && "bg-secondary",
                         isCurrentWeek && !isWeekend && !isHoliday && !isVacation && "bg-current-week",
-                        isClickable && "cursor-pointer hover:bg-secondary/20 active:animate-cell-pop",
+                        isClickable && "cursor-pointer hover:opacity-80 active:animate-cell-pop",
                         !isClickable && "cursor-not-allowed"
                       )}
+                      style={isVacation ? { backgroundColor: `hsl(${memberColor.bg})` } : undefined}
                     >
                       {isVacation && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-3 h-3 bg-secondary-foreground rounded-full" />
+                          <div className="w-3 h-3 bg-white rounded-full opacity-90" />
                         </div>
                       )}
                     </div>
