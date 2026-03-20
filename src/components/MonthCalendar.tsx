@@ -1,7 +1,9 @@
 import { HOLIDAYS_2026, SCHOOL_HOLIDAYS_2026, YEAR } from "@/data/holidays";
 import { cn } from "@/lib/utils";
 import EditableName from "./EditableName";
+import ColorPicker from "./ColorPicker";
 import { X } from "lucide-react";
+import type { MemberColorInfo } from "@/hooks/useMemberColors";
 
 interface MonthCalendarProps {
   month: number;
@@ -11,6 +13,9 @@ interface MonthCalendarProps {
   onRemoveMember: (index: number) => void;
   hasVacation: (dateStr: string, memberIndex: number) => boolean;
   toggleVacation: (dateStr: string, memberIndex: number) => void;
+  getMemberColor: (memberIndex: number) => MemberColorInfo;
+  getMemberColorIndex: (memberIndex: number) => number;
+  onSetMemberColor: (memberIndex: number, colorIndex: number) => void;
 }
 
 const MonthCalendar = ({
