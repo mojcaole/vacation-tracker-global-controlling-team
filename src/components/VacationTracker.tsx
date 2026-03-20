@@ -34,6 +34,7 @@ const VacationTracker = () => {
   const [teamMembers, setTeamMembers] = useState<string[]>(loadTeamFromStorage);
   const { hasVacation, toggleVacation, getVacationCount } = useVacationStore();
   const { entries, addEntry, clearAudit } = useAuditTrail();
+  const { getMemberColor, getMemberColorIndex, setMemberColor } = useMemberColors();
   const prevTeamRef = useRef<string[]>(teamMembers);
 
   useEffect(() => {
