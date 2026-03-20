@@ -1,6 +1,13 @@
 import { useState, useCallback, useEffect } from "react";
 
-export const MEMBER_COLORS = [
+export interface MemberColorInfo {
+  name: string;
+  bg: string;
+  bgDark: string;
+  rgb: [number, number, number];
+}
+
+export const MEMBER_COLORS: MemberColorInfo[] = [
   { name: "Cobalt", bg: "214 100% 33%", bgDark: "214 100% 45%", rgb: [0, 71, 171] },
   { name: "Emerald", bg: "160 84% 39%", bgDark: "160 84% 45%", rgb: [16, 163, 127] },
   { name: "Rose", bg: "350 80% 55%", bgDark: "350 80% 60%", rgb: [214, 51, 74] },

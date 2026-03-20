@@ -105,10 +105,16 @@ const MonthCalendar = ({
               key={idx}
               className="bg-header-bg/90 text-primary-foreground px-2 py-2 font-semibold text-xs uppercase tracking-wider text-center relative group"
             >
-              <EditableName
-                value={member}
-                onChange={(name) => onUpdateMember(idx, name)}
-              />
+              <div className="flex items-center justify-center gap-1.5">
+                <ColorPicker
+                  selectedIndex={getMemberColorIndex(idx)}
+                  onSelect={(colorIndex) => onSetMemberColor(idx, colorIndex)}
+                />
+                <EditableName
+                  value={member}
+                  onChange={(name) => onUpdateMember(idx, name)}
+                />
+              </div>
               {teamMembers.length > 1 && (
                 <button
                   onClick={() => onRemoveMember(idx)}
