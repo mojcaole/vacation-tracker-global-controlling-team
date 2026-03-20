@@ -1,7 +1,9 @@
 import { HOLIDAYS_2026, SCHOOL_HOLIDAYS_2026, YEAR } from "@/data/holidays";
 import { cn } from "@/lib/utils";
 import EditableName from "./EditableName";
+import ColorPicker from "./ColorPicker";
 import { X } from "lucide-react";
+import type { MemberColorInfo } from "@/hooks/useMemberColors";
 
 interface MonthCalendarProps {
   month: number;
@@ -11,6 +13,9 @@ interface MonthCalendarProps {
   onRemoveMember: (index: number) => void;
   hasVacation: (dateStr: string, memberIndex: number) => boolean;
   toggleVacation: (dateStr: string, memberIndex: number) => void;
+  getMemberColor: (memberIndex: number) => MemberColorInfo;
+  getMemberColorIndex: (memberIndex: number) => number;
+  onSetMemberColor: (memberIndex: number, colorIndex: number) => void;
 }
 
 const MonthCalendar = ({
@@ -21,6 +26,9 @@ const MonthCalendar = ({
   onRemoveMember,
   hasVacation,
   toggleVacation,
+  getMemberColor,
+  getMemberColorIndex,
+  onSetMemberColor,
 }: MonthCalendarProps) => {
   const getDaysInMonth = (year: number, month: number) => {
     return new Date(year, month + 1, 0).getDate();
@@ -97,10 +105,16 @@ const MonthCalendar = ({
               key={idx}
               className="bg-header-bg/90 text-primary-foreground px-2 py-2 font-semibold text-xs uppercase tracking-wider text-center relative group"
             >
-              <EditableName
-                value={member}
-                onChange={(name) => onUpdateMember(idx, name)}
-              />
+              <div className="flex items-center justify-center gap-1.5">
+                <ColorPicker
+                  selectedIndex={getMemberColorIndex(idx)}
+                  onSelect={(colorIndex) => onSetMemberColor(idx, colorIndex)}
+                />
+                <EditableName
+                  value={member}
+                  onChange={(name) => onUpdateMember(idx, name)}
+                />
+              </div>
               {teamMembers.length > 1 && (
                 <button
                   onClick={() => onRemoveMember(idx)}
@@ -174,6 +188,7 @@ const MonthCalendar = ({
                 {teamMembers.map((_, memberIdx) => {
                   const isVacation = hasVacation(dateStr, memberIdx);
                   const isClickable = !isHoliday && !isWeekend;
+                  const memberColor = getMemberColor(memberIdx);
 
                   return (
                     <div
@@ -183,15 +198,15 @@ const MonthCalendar = ({
                         "relative border-b border-border transition-all duration-150",
                         isHoliday && "bg-primary/10",
                         isWeekend && !isHoliday && "bg-weekend",
-                        isVacation && "bg-secondary",
                         isCurrentWeek && !isWeekend && !isHoliday && !isVacation && "bg-current-week",
-                        isClickable && "cursor-pointer hover:bg-secondary/20 active:animate-cell-pop",
+                        isClickable && "cursor-pointer hover:opacity-80 active:animate-cell-pop",
                         !isClickable && "cursor-not-allowed"
                       )}
+                      style={isVacation ? { backgroundColor: `hsl(${memberColor.bg})` } : undefined}
                     >
                       {isVacation && (
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-3 h-3 bg-secondary-foreground rounded-full" />
+                          <div className="w-3 h-3 bg-white rounded-full opacity-90" />
                         </div>
                       )}
                     </div>

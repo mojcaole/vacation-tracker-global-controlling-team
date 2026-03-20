@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { MONTHS, YEAR, TEAM_MEMBERS as DEFAULT_TEAM } from "@/data/holidays";
 import { useVacationStore } from "@/hooks/useVacationStore";
 import { useAuditTrail } from "@/hooks/useAuditTrail";
+import { useMemberColors } from "@/hooks/useMemberColors";
 import { exportToExcel } from "@/utils/exportCalendar";
 import { exportToPdf } from "@/utils/exportPdf";
 import Legend from "./Legend";
@@ -33,6 +34,7 @@ const VacationTracker = () => {
   const [teamMembers, setTeamMembers] = useState<string[]>(loadTeamFromStorage);
   const { hasVacation, toggleVacation, getVacationCount } = useVacationStore();
   const { entries, addEntry, clearAudit } = useAuditTrail();
+  const { getMemberColor, getMemberColorIndex, setMemberColor } = useMemberColors();
   const prevTeamRef = useRef<string[]>(teamMembers);
 
   useEffect(() => {
@@ -115,7 +117,7 @@ const VacationTracker = () => {
               Excel
             </button>
             <button
-              onClick={() => exportToPdf(teamMembers, hasVacation)}
+              onClick={() => exportToPdf(teamMembers, hasVacation, (idx) => getMemberColor(idx).rgb)}
               className="flex items-center gap-2 px-4 py-2 bg-foreground text-background font-bold uppercase tracking-wider text-sm hover:bg-primary transition-colors"
             >
               <FileText className="w-4 h-4" />
@@ -197,6 +199,9 @@ const VacationTracker = () => {
               onRemoveMember={removeMember}
               hasVacation={hasVacation}
               toggleVacation={handleToggleVacation}
+              getMemberColor={getMemberColor}
+              getMemberColorIndex={getMemberColorIndex}
+              onSetMemberColor={setMemberColor}
             />
           ) : (
             MONTHS.map((monthName, idx) => (
@@ -209,6 +214,9 @@ const VacationTracker = () => {
                 onRemoveMember={removeMember}
                 hasVacation={hasVacation}
                 toggleVacation={handleToggleVacation}
+                getMemberColor={getMemberColor}
+                getMemberColorIndex={getMemberColorIndex}
+                onSetMemberColor={setMemberColor}
               />
             ))
           )}

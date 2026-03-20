@@ -12,7 +12,8 @@ function getDaysInMonth(year: number, month: number): number {
 
 export function exportToPdf(
   teamMembers: string[],
-  hasVacation: VacationChecker
+  hasVacation: VacationChecker,
+  getMemberColorRgb?: (memberIndex: number) => [number, number, number]
 ): void {
   const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
 
@@ -59,10 +60,11 @@ export function exportToPdf(
           row.push({ content: "", styles: rowStyles });
         } else {
           const isVac = hasVacation(dateStr, memberIdx);
+          const rgb = getMemberColorRgb ? getMemberColorRgb(memberIdx) : [0, 71, 171] as [number, number, number];
           row.push({
             content: isVac ? "●" : "",
             styles: isVac
-              ? { fillColor: [0, 71, 171], textColor: [255, 255, 255], halign: "center" as const }
+              ? { fillColor: rgb, textColor: [255, 255, 255], halign: "center" as const }
               : { halign: "center" as const },
           });
         }
