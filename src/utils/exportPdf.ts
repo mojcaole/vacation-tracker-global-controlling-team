@@ -12,7 +12,8 @@ function getDaysInMonth(year: number, month: number): number {
 
 export function exportToPdf(
   teamMembers: string[],
-  hasVacation: VacationChecker
+  hasVacation: VacationChecker,
+  getMemberColorRgb?: (memberIndex: number) => [number, number, number]
 ): void {
   const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
 
