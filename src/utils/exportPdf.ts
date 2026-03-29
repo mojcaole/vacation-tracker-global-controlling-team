@@ -94,5 +94,60 @@ export function exportToPdf(
     });
   });
 
+  // Yearly Summary Page
+  doc.addPage();
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text(`Yearly Summary ${YEAR} — Vacation Tracker`, 14, 14);
+
+  const summaryHead = [["Team Member", ...MONTHS.map(m => m.substring(0, 3)), "Total"]];
+  const summaryBody: { content: string; styles: object }[][] = [];
+
+  teamMembers.forEach((member, memberIdx) => {
+    const rgb = getMemberColorRgb ? getMemberColorRgb(memberIdx) : [0, 71, 171] as [number, number, number];
+    const monthlyCounts: number[] = [];
+
+    MONTHS.forEach((_, monthIndex) => {
+      const daysInMonth = getDaysInMonth(YEAR, monthIndex);
+      let count = 0;
+      for (let day = 1; day <= daysInMonth; day++) {
+        const m = String(monthIndex + 1).padStart(2, "0");
+        const d = String(day).padStart(2, "0");
+        if (hasVacation(`${YEAR}-${m}-${d}`, memberIdx)) count++;
+      }
+      monthlyCounts.push(count);
+    });
+
+    const total = monthlyCounts.reduce((a, b) => a + b, 0);
+
+    const row: { content: string; styles: object }[] = [
+      { content: member, styles: { fillColor: rgb, textColor: [255, 255, 255], fontStyle: "bold" } },
+      ...monthlyCounts.map(c => ({
+        content: c > 0 ? String(c) : "–",
+        styles: { halign: "center" as const, ...(c > 0 ? { fontStyle: "bold" as const } : {}) },
+      })),
+      { content: String(total), styles: { halign: "center" as const, fontStyle: "bold" as const, fillColor: rgb, textColor: [255, 255, 255] } },
+    ];
+
+    summaryBody.push(row);
+  });
+
+  autoTable(doc, {
+    startY: 22,
+    head: summaryHead,
+    body: summaryBody,
+    theme: "grid",
+    headStyles: {
+      fillColor: [26, 26, 26],
+      textColor: [255, 255, 255],
+      fontStyle: "bold",
+      halign: "center",
+      fontSize: 8,
+    },
+    styles: { fontSize: 8, cellPadding: 2.5 },
+    columnStyles: { 0: { cellWidth: 40 } },
+    margin: { left: 14, right: 14 },
+  });
+
   doc.save(`vacation_tracker_${YEAR}.pdf`);
 }
